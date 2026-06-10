@@ -1,102 +1,221 @@
-# Gubbis — Fase 1 (jugar ya, sin backend)
+# 🏝️ Gubbis
 
-Juego de gestión de tribu por turnos. Eres el dios de los Gubbis: mantenlos vivos,
-felices y fieles mientras el volcán Escarlata incuba oleadas de dinosaurios.
+> Guía a una tribu de pequeñas criaturas adorables en una isla tropical donde cada decisión importa.
+>
+> Cultiva Mumi. Forma familias. Descubre talentos ocultos. Sobrevive a las oleadas de dinosaurios que descienden desde el Volcán Escarlata.
 
-Este repo implementa la **Fase 1** del handoff técnico:
+![Estado: En desarrollo](https://img.shields.io/badge/status-alpha-orange)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Phaser](https://img.shields.io/badge/Phaser-3-purple)
 
-- `src/sim/` — **simulador en TypeScript puro** (sin React, sin DB). El corazón es
-  la función pura `resolverTurno(estado, decisiones)`, dividida en fases:
-  decisiones → producción → consumo → eventos → oleada → vida → envejecimiento → stats.
-- `src/ui/gameReducer.ts` — `useReducer` como motor de turno en cliente.
-- `src/app/` — HUD de Next.js (tablas, números, íconos).
-- `src/render/` + `src/ui/Overworld.tsx` — **capa gráfica (Phaser)**: la isla como
-  tilemap procedural determinista, Gubbis como sprites que deambulan cerca de su
-  tarea, el volcán humea más fuerte cuando la oleada se acerca, y el día de la
-  oleada los dinos bajan a la aldea (animación que dramatiza un resultado YA
-  calculado por el sim — el movimiento es cosmético, Handoff §15).
+---
 
-## Arrancar
+## 🌱 ¿Qué es Gubbis?
+
+**Gubbis** es un juego de gestión de colonia por turnos donde diriges una tribu de pequeñas criaturas llamadas Gubbis.
+
+Cada Gubbi es un individuo único.
+
+Tienen:
+
+* Personalidad propia.
+* Talentos ocultos.
+* Relaciones y amistades.
+* Parejas y familias.
+* Sueños, frustraciones y preferencias.
+
+Tu trabajo no es controlar héroes.
+
+Tu trabajo es construir una sociedad.
+
+Mientras tanto, en el corazón de la isla, el **Volcán Escarlata** despierta.
+
+Cada cierto tiempo, hordas de dinosaurios descienden por sus laderas para poner a prueba todo lo que has construido.
+
+---
+
+## 🎮 Jugabilidad
+
+Cada día:
+
+1. Asignas tareas a tus Gubbis.
+2. Distribuyes recursos.
+3. Tomas decisiones para la tribu.
+4. Resuelves el turno.
+5. Lees las consecuencias.
+
+Los Gubbis crecerán, aprenderán, se enamorarán, tendrán hijos, se convertirán en leyendas... o morirán intentando proteger su hogar.
+
+---
+
+## ✨ Características
+
+### 👥 Individuos persistentes
+
+Cada Gubbi tiene:
+
+* Nombre único.
+* Aptitudes.
+* Rasgos.
+* Edad.
+* Relaciones.
+* Historial personal.
+
+No gestionas números.
+
+Gestionas vidas.
+
+---
+
+### 🌾 Economía simple, consecuencias profundas
+
+* Cultiva Mumi.
+* Tala bosques.
+* Extrae minerales.
+* Construye edificios.
+* Mantén alimentada a la tribu.
+
+La escasez genera conflictos.
+
+La prosperidad genera crecimiento.
+
+---
+
+### ❤️ Relaciones emergentes
+
+Los Gubbis:
+
+* Forman amistades.
+* Se convierten en pareja.
+* Tienen descendencia.
+* Recuerdan experiencias.
+
+Una tribu feliz funciona mejor.
+
+Una tribu rota puede colapsar.
+
+---
+
+### 🌋 Oleadas de dinosaurios
+
+El volcán nunca duerme.
+
+Cada cierto número de días aparecen nuevas amenazas:
+
+* Brutos
+* Enjambres
+* Voladores
+
+Preparar una defensa efectiva es tan importante como mantener la economía.
+
+---
+
+### 🏆 Leyendas de la tribu
+
+Algunos Gubbis alcanzan la grandeza.
+
+Pueden recibir títulos como:
+
+* Campeón
+* Maestra Cultivadora
+* Sumo Sacerdote
+* Anciano Sabio
+
+Sus logros inspiran a toda la tribu.
+
+---
+
+### 📜 Crónica viva
+
+La partida genera su propia historia.
+
+Al final podrás leer acontecimientos como:
+
+> "Bombo derrotó al Gran Colmillo durante la Séptima Oleada."
+
+> "Mimi fundó la primera familia de la aldea."
+
+> "Torgo murió defendiendo la puerta norte."
+
+Cada colonia cuenta una historia distinta.
+
+---
+
+## 🏗️ Estado actual
+
+Actualmente el proyecto se encuentra en la **Fase 1**.
+
+Incluye:
+
+* Simulación completa por turnos.
+* Individuos persistentes.
+* Producción y consumo.
+* Relaciones.
+* Oleadas de dinosaurios.
+* Sistema de títulos.
+* Crónica.
+* Overworld visual en Phaser.
+* Guardado local.
+
+No incluye todavía:
+
+* Backend persistente.
+* Multiplataforma.
+* Editor de mapas.
+* Arte definitivo.
+
+---
+
+## 🚀 Ejecutar
 
 ```bash
 npm install
-npm run dev        # http://localhost:3000
+npm run dev
 ```
 
-## Tests del simulador
+Abrir:
+
+```text
+http://localhost:3000
+```
+
+---
+
+## 🧪 Tests
 
 ```bash
-npm test           # vitest: determinismo, no-mutación, oleadas, hambre, humo 100 turnos
+npm test
 npm run typecheck
 ```
 
-## Cómo jugar (v1)
+---
 
-1. Asigna una tarea a cada Gubbi adulto (granja, leñador, mina, templo, defensa, descanso).
-2. Decide la ración y cuánta Mumi sembrar (cosecha ×2.5 en 5 días).
-3. Construye edificios si alcanzan los recursos.
-4. **Terminar el día** resuelve el turno y muestra el reporte.
-5. Cada ~12 días baja una oleada del volcán: prepara defensores *antes*.
-   La composición (bruto / enjambre / volador) pide aptitudes distintas.
+## 🧠 Filosofía del proyecto
 
-## Estructura
+Gubbis busca combinar:
 
-```
-src/sim/
-  tipos.ts            # GameState, Gubbi, Decision, Oleada… (Handoff §18)
-  rng.ts              # RNG con semilla (determinista)
-  gubbi.ts            # generarGubbi, describir ("fortachón gruñón"), techos de talento
-  quimica.ts          # química de grupo y modificador de valor (§7)
-  edificios.ts        # catálogo y costos
-  fases/
-    produccion.ts     # producción + subir por uso (§8)
-    consumo.ts        # raciones y hambre
-    eventos.ts        # eventos aleatorios
-    oleada.ts         # la columna vertebral (§5)
-    vida.ts           # vínculos, parejas, nacimientos, muertes, peregrinaje (§7, §9)
-  resolverTurno.ts    # la función pura central (§13–15)
-  nuevaPartida.ts
-  index.ts            # API pública del sim
-```
+* La gestión emergente de RimWorld.
+* El encanto visual de Pikmin.
+* La personalidad de los Chao.
+* El tono tribal de Patapon.
+* La simplicidad de un simulador por turnos.
 
-## Decisiones ya tomadas (no re-litigar)
+Todo ello en una experiencia accesible, acogedora y fácil de entender.
 
-Ver `Handoff_Gubbis_v3` §19. En resumen: individuos persistentes, relaciones con
-memoria, oleada desde v1, sim puro desacoplado, overworld después, backend Node
-(Fase 2: saves JSONB en Postgres), Python solo como laboratorio de balance offline.
+---
 
-## La capa gráfica (decisiones)
+## 📅 Próximos pasos
 
-- **Phaser** sobre Pixi (§20 resuelto): tilemaps, tweens, partículas y cámara ya
-  incluidos; el camino más corto a un overworld vivo.
-- **Placeholders generados por código** (blobs con ojos, emojis para edificios):
-  cero assets que mantener. Cuando haya arte real: la isla pasa a un tilemap de
-  *Tiled* y los Gubbis a sprite sheets — solo cambia `src/render/`, el sim ni se entera.
-- Lectura visual: color del cuerpo = aptitud dominante (rojo fortachón, verde ágil,
-  lila mágico, cian inteligente); crías pequeñas, ancianos tenues. Tocar un Gubbi
-  muestra su nombre.
+* Equilibrar generaciones y oleadas.
+* Expandir los títulos legendarios.
+* Deseos y peticiones individuales.
+* Sistema de guardado en Postgres.
+* Simulación masiva para balance.
+* Arte definitivo de Gubbis y dinosaurios.
 
-## Sistemas completos (v9)
+---
 
-- **Autoguardado** en localStorage: F5 ya no mata la partida; Reiniciar la borra.
-- **Ficha de Gubbi** (clic en el nombre o en el sprite): aptitudes con techos, vínculos, título.
-- **Defensa estimada** visible en el panel del volcán (verde ✓ / rojo ⚠️ contra el tamaño).
-- **Títulos con aura** (§8): Campeón (+20% defensa), Maestra Cultivadora (+20% Mumi),
-  Sumo Sacerdote (+25% Fe y devoción de toda la tribu), Anciano Sabio (los jóvenes
-  suben más rápido). Cada título da +2 Prestigio.
-- **Peticiones de voluntad propia** (§9): Gubbis infelices y mal encajados piden rol;
-  permitir/negar con consecuencias. La petición es una pista del talento oculto.
-- **Crónica**: los hitos de la partida (nacimientos, caídos, títulos, parejas, oleadas)
-  se cuentan al final.
-- **Sonido sintetizado** (Web Audio, sin assets): tambor del día, latidos de alerta,
-  rugido de oleada. Botón 🔊/🔇.
-- **Balance verificado**: bot con estrategia decente gana por Prestigio ~día 128;
-  las derrotas tardías (117–185) son la carrera final contra oleadas que escalan.
-
-## Próximos pasos sugeridos
-
-- Afinar los "dos relojes" (cadencia de oleadas vs. generaciones) — §20.
-- Títulos con buff de aura (Campeón, Maestra Cultivadora…).
-- Peticiones de cambio de rol por voluntad propia (permitir / obligar).
-- Fase 2: API routes de Next + Postgres (save = GameState como JSONB).
-- Laboratorio de balance en Python (miles de partidas headless).
+> "Los Gubbis son pequeños.
+>
+> Sus problemas no."
